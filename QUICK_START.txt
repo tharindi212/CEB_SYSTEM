@@ -1,0 +1,111 @@
+===============================================
+QUICK START GUIDE
+===============================================
+
+STEP 1: SETUP (5 minutes)
+--------------------------
+1. Copy project to: C:\xampp\htdocs\quotation_system
+2. Start XAMPP (Apache + MySQL)
+3. Create database: http://localhost/phpmyadmin
+   - Database name: quotation_system
+4. Import: database.sql
+5. Configure email in: config/email.php
+
+STEP 2: FIRST LOGIN
+-------------------
+URL: http://localhost/quotation_system/
+Email: chief@electricityboard.com
+Password: admin123
+
+STEP 3: ADD USERS
+-----------------
+1. Go to: http://localhost/quotation_system/register.php
+2. Register users for each role
+3. Login as Chief Engineer to approve them
+4. Approved users can now login
+
+STEP 4: SUBMIT QUOTATION
+-------------------------
+1. Login as Clerk
+2. Click "New Quotation Request"
+3. Select type: Vehicle Repair or Other
+4. Fill details and submit
+5. Email sent to Chief Clerk & Chief Engineer
+
+STEP 5: APPROVAL WORKFLOW
+--------------------------
+Each role logs in and approves in sequence:
+1. Chief Clerk → Approves
+2. Electricity Supervisor → Approves
+3. Electrical Engineer → Approves
+4. Chief Engineer → Final Approval
+5. Electricity Supervisor → Creates PO/Awarding Letter
+6. All roles → Approve PO/Awarding Letter
+
+COMMON TASKS:
+-------------
+
+REGISTER NEW USER:
+→ http://localhost/quotation_system/register.php
+→ Fill form and submit
+→ Wait for Chief Engineer approval
+→ Check email for confirmation
+
+SUBMIT QUOTATION (Clerk):
+→ Login → New Quotation Request
+→ Select type and fill details
+→ Upload attachment (optional)
+→ Submit
+
+APPROVE QUOTATION:
+→ Login with your role
+→ View pending items on dashboard
+→ Click "Review" button
+→ Click "Approve" or "Deny"
+
+CREATE PO/AWARDING (Supervisor):
+→ Login → Approved Requests
+→ Click "Create PO/Awarding"
+→ Enter letter details
+→ Submit
+
+APPROVE REGISTRATION (Chief Engineer):
+→ Login → Dashboard
+→ View pending registrations
+→ Click "Review"
+→ Approve or Reject
+
+EMAIL SETUP (Gmail):
+--------------------
+1. Enable 2-Step Verification
+2. Generate App Password:
+   https://myaccount.google.com/apppasswords
+3. Update config/email.php:
+   SMTP_USERNAME: your_email@gmail.com
+   SMTP_PASSWORD: generated_app_password
+
+TROUBLESHOOTING:
+----------------
+✗ Can't login?
+  → Check email/password
+  → Check if user is approved
+
+✗ Email not sending?
+  → Verify App Password
+  → Check internet connection
+
+✗ Database error?
+  → Check MySQL is running
+  → Verify database imported
+
+✗ Page not found?
+  → Check Apache is running
+  → Verify URL is correct
+
+SUPPORT:
+--------
+For detailed instructions, see:
+- INSTALLATION_GUIDE.txt
+- SYSTEM_OVERVIEW.txt
+
+===============================================

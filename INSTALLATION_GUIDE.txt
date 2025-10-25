@@ -1,0 +1,188 @@
+===============================================
+QUOTATION MANAGEMENT SYSTEM - INSTALLATION GUIDE
+===============================================
+
+REQUIREMENTS:
+-------------
+- XAMPP (Apache, MySQL, PHP 7.4 or higher)
+- Web Browser (Chrome, Firefox, Edge, etc.)
+- Gmail account with App Password (for email notifications)
+
+INSTALLATION STEPS:
+-------------------
+
+1. EXTRACT PROJECT FILES
+   - Extract the project folder to: C:\xampp\htdocs\quotation_system
+   - Make sure all files are in the quotation_system folder
+
+2. START XAMPP
+   - Open XAMPP Control Panel
+   - Start Apache
+   - Start MySQL
+
+3. CREATE DATABASE
+   - Open your browser and go to: http://localhost/phpmyadmin
+   - Click "New" to create a new database
+   - Database name: quotation_system
+   - Collation: utf8_general_ci
+   - Click "Create"
+
+4. IMPORT DATABASE SCHEMA
+   - Select the "quotation_system" database
+   - Click on "Import" tab
+   - Click "Choose File" and select: database.sql (from project folder)
+   - Click "Go" to import
+   - You should see success message
+
+5. CONFIGURE EMAIL SETTINGS
+   - Open: config/email.php
+   - Update the following settings:
+
+   For Gmail:
+   -----------
+   SMTP_HOST: smtp.gmail.com (keep as is)
+   SMTP_PORT: 587 (keep as is)
+   SMTP_USERNAME: your_email@gmail.com (your Gmail address)
+   SMTP_PASSWORD: your_app_password (NOT your Gmail password!)
+   SMTP_FROM_EMAIL: your_email@gmail.com (your Gmail address)
+
+   How to get Gmail App Password:
+   1. Go to: https://myaccount.google.com/security
+   2. Enable 2-Step Verification
+   3. Go to: https://myaccount.google.com/apppasswords
+   4. Select "Mail" and "Other (Custom name)"
+   5. Generate password and copy it
+   6. Use this password in SMTP_PASSWORD
+
+6. UPDATE BASE URL (if needed)
+   - Open: config/email.php
+   - Update BASE_URL if your project is not in quotation_system folder
+   - Default: http://localhost/quotation_system/
+
+7. CREATE UPLOADS FOLDER
+   - The uploads folder will be created automatically
+   - Or manually create: quotation_system/uploads/
+   - Set permissions to 777 (write access)
+
+8. ACCESS THE SYSTEM
+   - Open browser: http://localhost/quotation_system/
+   - You will be redirected to login page
+
+DEFAULT CREDENTIALS:
+--------------------
+Email: chief@electricityboard.com
+Password: admin123
+Role: Chief Engineer
+
+FIRST TIME SETUP:
+-----------------
+1. Login as Chief Engineer using default credentials
+2. Register new users by going to: http://localhost/quotation_system/register.php
+3. After registration, login as Chief Engineer to approve new users
+4. Once approved, new users can login with their credentials
+
+USER WORKFLOW:
+--------------
+1. CLERK:
+   - Login and submit quotation requests
+   - Select between "Vehicle Repair" or "Other"
+   - Fill in required details and submit
+   - Track request status on dashboard
+
+2. CHIEF CLERK:
+   - Review pending quotation requests
+   - Approve or deny with reasons
+   - Review and approve/reject PO/Awarding letters
+
+3. ELECTRICITY SUPERVISOR:
+   - Review Chief Clerk approved requests
+   - Approve or deny with reasons
+   - Create PO/Awarding letters for fully approved requests
+   - Review and approve/reject PO/Awarding letters
+
+4. ELECTRICAL ENGINEER:
+   - Review Supervisor approved requests
+   - Approve or deny with reasons
+   - Review and approve/reject PO/Awarding letters
+
+5. CHIEF ENGINEER:
+   - Approve new user registrations
+   - Final approval of quotation requests
+   - Review and approve/reject PO/Awarding letters
+   - Send notification to Supervisor for PO/Awarding
+
+EMAIL NOTIFICATIONS:
+-------------------
+The system sends automatic email notifications for:
+- New user registrations (to Chief Engineer)
+- New quotation submissions (to Chief Clerk and Chief Engineer)
+- Approval/Denial at each stage
+- PO/Awarding letter creation
+- Registration approval/rejection
+
+TROUBLESHOOTING:
+----------------
+1. Database Connection Error:
+   - Check if MySQL is running in XAMPP
+   - Verify database name is "quotation_system"
+   - Check config/database.php settings
+
+2. Email Not Sending:
+   - Verify Gmail App Password is correct
+   - Check if 2-Step Verification is enabled
+   - Check config/email.php settings
+   - Check internet connection
+
+3. File Upload Error:
+   - Check if uploads folder exists
+   - Set folder permissions to 777
+   - Check PHP upload_max_filesize in php.ini
+
+4. Page Not Found:
+   - Verify Apache is running
+   - Check project folder name matches URL
+   - Update BASE_URL in config/email.php
+
+5. Session Errors:
+   - Clear browser cookies and cache
+   - Restart Apache in XAMPP
+
+SECURITY NOTES:
+---------------
+- Change default Chief Engineer password immediately
+- Use strong passwords for all accounts
+- Never share App Password publicly
+- Keep PHPMailer library updated
+- Regular database backups recommended
+
+FOLDER STRUCTURE:
+-----------------
+quotation_system/
+├── assets/
+│   └── css/
+│       └── style.css
+├── config/
+│   ├── database.php
+│   └── email.php
+├── includes/
+│   └── functions.php
+├── vendor/
+│   └── PHPMailer/
+├── uploads/
+├── clerk/
+├── chief_clerk/
+├── electricity_supervisor/
+├── electrical_engineer/
+├── chief_engineer/
+├── database.sql
+├── index.php
+├── login.php
+├── register.php
+├── logout.php
+└── dashboard.php
+
+SUPPORT:
+--------
+For technical issues, please contact your system administrator.
+
+===============================================
