@@ -4,9 +4,23 @@
     box-sizing: border-box;
 }
 
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(-45deg, #667eea, #764ba2, #4a90e2, #6b8dd6);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
     min-height: 100vh;
     line-height: 1.6;
 }
@@ -25,13 +39,26 @@ body {
     padding: 20px;
 }
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .auth-box {
-    background: white;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
     border-radius: 10px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     padding: 40px;
     width: 100%;
     max-width: 450px;
+    animation: fadeInUp 0.8s ease-out;
 }
 
 .auth-box h2 {
@@ -60,9 +87,20 @@ body {
     transition: border-color 0.3s;
 }
 
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
 .form-control:focus {
     outline: none;
     border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
 }
 
 .btn {
@@ -77,14 +115,34 @@ body {
     text-align: center;
 }
 
+@keyframes buttonPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+    }
+    70% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+    }
+}
+
 .btn-primary {
-    background: #667eea;
+    background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
     width: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-primary:hover {
-    background: #5568d3;
+    background: linear-gradient(45deg, #5568d3, #6543a0);
+    transform: translateY(-2px);
+    animation: buttonPulse 1.5s infinite;
 }
 
 .btn-success {
