@@ -84,3 +84,46 @@ CREATE TABLE IF NOT EXISTS po_awarding_letters (
 -- Insert default Chief Engineer account (password: admin123)
 INSERT INTO users (full_name, email, password, role, status)
 VALUES ('Chief Engineer', 'chief@electricityboard.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'chief_engineer', 'active');
+
+-- Gangs table: gangs named by Sri Lankan city names
+CREATE TABLE IF NOT EXISTS gangs (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Vehicles table: one gang can have multiple vehicles
+CREATE TABLE IF NOT EXISTS vehicles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    gang_id INT NOT NULL,
+    vehicle_number VARCHAR(50) NOT NULL,
+    make_model VARCHAR(100) NULL,
+    status ENUM('active', 'inactive') DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_vehicle_number (vehicle_number),
+    INDEX idx_vehicles_gang (gang_id),
+    CONSTRAINT fk_vehicles_gang
+        FOREIGN KEY (gang_id) REFERENCES gangs(id) ON DELETE CASCADE
+);
+
+-- Optional seed: common Sri Lankan city names as gangs
+INSERT INTO gangs (name) VALUES
+('Colombo'), ('Gampaha'), ('Kalutara'),
+('Kandy'), ('Matale'), ('Nuwara Eliya'),
+('Galle'), ('Matara'), ('Hambantota'),
+('Jaffna'), ('Kilinochchi'), ('Mannar'),
+('Vavuniya'), ('Mullaitivu'),
+('Batticaloa'), ('Ampara'), ('Trincomalee'),
+('Kurunegala'), ('Puttalam'),
+('Anuradhapura'), ('Polonnaruwa'),
+('Badulla'), ('Monaragala'),
+('Ratnapura'), ('Kegalle');
+
+-- Optional sample vehicles (adjust as needed)
+-- Example for Colombo and Kandy
+INSERT INTO vehicles (gang_id, vehicle_number, make_model) VALUES
+((SELECT id FROM gangs WHERE name='Colombo'), 'WP KA-1234', 'Nissan Cabstar'),
+((SELECT id FROM gangs WHERE name='Colombo'), 'WP KC-5678', 'Toyota Dyna'),
+((SELECT id FROM gangs WHERE name='Kandy'),   'CP KA-4321', 'Isuzu NPR');

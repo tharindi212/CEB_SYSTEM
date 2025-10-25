@@ -5,6 +5,25 @@ requireRole('clerk');
 $error = '';
 $success = '';
 
+// AJAX: return vehicles for a given gang as JSON
+if (isset($_GET['action']) && $_GET['action'] === 'vehicles' && isset($_GET['gang_id'])) {
+    header('Content-Type: application/json');
+    $gang_id = (int) $_GET['gang_id'];
+    $stmt = $conn->prepare("SELECT id, vehicle_number FROM vehicles WHERE gang_id = ? ORDER BY vehicle_number");
+    $stmt->bind_param("i", $gang_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+    exit;
+}
+
+// Fetch gangs for dropdown
+$gangs = [];
+$gResult = $conn->query("SELECT id, name FROM gangs ORDER BY name");
+if ($gResult) {
+    $gangs = $gResult->fetch_all(MYSQLI_ASSOC);
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $request_type = sanitize($_POST['request_type']);
     $expecting_date = sanitize($_POST['expecting_date']);
@@ -17,9 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $attachment = null;
 
     if ($request_type === 'vehicle_repair') {
-        $selected_gang = sanitize($_POST['selected_gang']);
+        $selected_gang_id = isset($_POST['selected_gang']) ? (int) $_POST['selected_gang'] : null;
         $vehicle_number = sanitize($_POST['vehicle_number']);
         $repair_details = sanitize($_POST['repair_details']);
+
+        // Map gang_id to its name to keep existing schema (selected_gang stores name)
+        if ($selected_gang_id) {
+            $stmt = $conn->prepare("SELECT name FROM gangs WHERE id = ?");
+            $stmt->bind_param("i", $selected_gang_id);
+            $stmt->execute();
+            $res = $stmt->get_result();
+            $row = $res->fetch_assoc();
+            $selected_gang = $row ? $row['name'] : null;
+        }
     } else {
         $resource_type = sanitize($_POST['resource_type']);
         $description = sanitize($_POST['description']);
@@ -110,12 +139,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div id="vehicle_fields" style="display: none;">
                             <div class="form-group">
                                 <label>Selected Gang</label>
-                                <input type="text" name="selected_gang" class="form-control">
+                                <select name="selected_gang" id="selected_gang" class="form-control">
+                                    <option value="">Select Gang</option>
+                                    <?php foreach ($gangs as $g): ?>
+                                        <option value="<?php echo (int)$g['id']; ?>"><?php echo htmlspecialchars($g['name']); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
 
                             <div class="form-group">
                                 <label>Vehicle Number</label>
-                                <input type="text" name="vehicle_number" class="form-control">
+                                <select name="vehicle_number" id="vehicle_number" class="form-control" disabled>
+                                    <option value="">Select a gang first</option>
+                                </select>
                             </div>
 
                             <div class="form-group">
@@ -170,6 +206,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 otherFields.style.display = 'none';
             }
         }
+
+        // Load vehicles when gang changes
+        document.addEventListener('DOMContentLoaded', function() {
+            var gangSelect = document.getElementById('selected_gang');
+            var vehicleSelect = document.getElementById('vehicle_number');
+            if (gangSelect) {
+                gangSelect.addEventListener('change', function() {
+                    var gangId = this.value;
+                    vehicleSelect.innerHTML = '<option value="">Loading...</option>';
+                    vehicleSelect.disabled = true;
+                    if (!gangId) {
+                        vehicleSelect.innerHTML = '<option value="">Select a gang first</option>';
+                        return;
+                    }
+                    fetch('?action=vehicles&gang_id=' + encodeURIComponent(gangId))
+                        .then(function(res) { return res.json(); })
+                        .then(function(data) {
+                            var opts = ['<option value="">Select Vehicle</option>'];
+                            data.forEach(function(v) {
+                                opts.push('<option value="' + v.vehicle_number.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '\">' + v.vehicle_number.replace(/&/g,'&amp;').replace(/</g,'&lt;') + '</option>');
+                            });
+                            vehicleSelect.innerHTML = opts.join('');
+                            vehicleSelect.disabled = false;
+                        })
+                        .catch(function() {
+                            vehicleSelect.innerHTML = '<option value="">Failed to load vehicles</option>';
+                            vehicleSelect.disabled = true;
+                        });
+                });
+            }
+        });
     </script>
 </body>
 </html>
