@@ -92,7 +92,7 @@ $request = $result->fetch_assoc();
                                 <?php echo $request['electricity_supervisor_status'] === 'approved' ? '✓' : ($request['electricity_supervisor_status'] === 'denied' ? '✗' : '?'); ?>
                             </div>
                             <div class="timeline-content">
-                                <h4>Electricity Supervisor</h4>
+                                <h4>Electrical Superintendent</h4>
                                 <p>Status: <strong><?php echo ucfirst($request['electricity_supervisor_status']); ?></strong></p>
                             </div>
                         </div>

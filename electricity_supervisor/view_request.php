@@ -30,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $engineers = getUsersByRole($conn, 'electrical_engineer');
             $chief_engineers = getUsersByRole($conn, 'chief_engineer');
 
-            $subject = "Quotation Request Approved by Electricity Supervisor";
+            $subject = "Quotation Request Approved by Electrical Superintendent";
             $body = "<h3>Quotation Request Approved</h3>
-                     <p>Request #{$request_id} has been approved by Electricity Supervisor.</p>
+                     <p>Request #{$request_id} has been approved by Electrical Superintendent.</p>
                      <p><a href='" . BASE_URL . "dashboard.php'>Login to view details</a></p>";
 
             foreach ($engineers as $engineer) {
@@ -53,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->execute()) {
             $chief_engineers = getUsersByRole($conn, 'chief_engineer');
 
-            $subject = "Quotation Request Denied by Electricity Supervisor";
+            $subject = "Quotation Request Denied by Electrical Superintendent";
             $body = "<h3>Quotation Request Denied</h3>
-                     <p>Request #{$request_id} has been denied by Electricity Supervisor.</p>
+                     <p>Request #{$request_id} has been denied by Electrical Superintendent.</p>
                      <p><strong>Reason:</strong> {$reason}</p>
                      <p><a href='" . BASE_URL . "dashboard.php'>Login to view details</a></p>";
 

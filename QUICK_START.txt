@@ -33,13 +33,12 @@ STEP 4: SUBMIT QUOTATION
 5. Email sent to Chief Clerk & Chief Engineer
 
 STEP 5: APPROVAL WORKFLOW
---------------------------
 Each role logs in and approves in sequence:
 1. Chief Clerk → Approves
-2. Electricity Supervisor → Approves
+2. Electrical Superintendent → Approves
 3. Electrical Engineer → Approves
 4. Chief Engineer → Final Approval
-5. Electricity Supervisor → Creates PO/Awarding Letter
+5. Electrical Superintendent → Creates PO/Awarding Letter
 6. All roles → Approve PO/Awarding Letter
 
 COMMON TASKS:

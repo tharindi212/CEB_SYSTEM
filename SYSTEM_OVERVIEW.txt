@@ -29,7 +29,7 @@ USER ROLES & PERMISSIONS:
    - Review and approve/reject PO/Awarding letters
    - Notifications sent to Supervisor and Chief Engineer
 
-3. ELECTRICITY SUPERVISOR
+3. ELECTRICAL SUPERINTENDENT
    - Review Chief Clerk approved requests
    - Approve/Deny requests with reasons
    - Create PO/Awarding letters for approved requests
@@ -59,7 +59,7 @@ Step 2: CHIEF CLERK reviews and approves/denies
         ↓ (If approved → Email to Supervisor & Chief Engineer)
         ↓ (If denied → Email to Chief Engineer with reason)
 
-Step 3: ELECTRICITY SUPERVISOR reviews and approves/denies
+Step 3: ELECTRICAL SUPERINTENDENT reviews and approves/denies
         ↓ (If approved → Email to Engineer & Chief Engineer)
         ↓ (If denied → Email to Chief Engineer with reason)
 
@@ -70,7 +70,7 @@ Step 4: ELECTRICAL ENGINEER reviews and approves/denies
 Step 5: CHIEF ENGINEER final approval/denial
         ↓ (If approved → Email to Supervisor to create PO/Awarding)
 
-Step 6: ELECTRICITY SUPERVISOR creates PO/Awarding letter
+Step 6: ELECTRICAL SUPERINTENDENT creates PO/Awarding letter
         ↓ (Email to Chief Clerk, Engineer & Chief Engineer)
 
 Step 7: ALL ROLES approve/reject PO/Awarding letter

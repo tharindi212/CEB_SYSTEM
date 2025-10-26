@@ -4,25 +4,103 @@
     box-sizing: border-box;
 }
 
-@keyframes gradientBG {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(-45deg, #667eea, #764ba2, #4a90e2, #6b8dd6);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    /* keep a simple fallback for very old browsers */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     line-height: 1.6;
+}
+
+/* Animated background layers using body pseudo-elements so no HTML changes are required.
+   - ::before: smoothly shifting multicolor gradient
+   - ::after: soft blurred floating blobs
+   Both are non-interactive and sit behind page content. */
+html, body {
+    height: 100%;
+}
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    left: -20%;
+    top: -20%;
+    width: 140%;
+    height: 140%;
+    background: linear-gradient(120deg, #7b61ff 0%, #4ecdc4 25%, #ff7b7b 50%, #ffd166 75%, #7b61ff 100%);
+    background-size: 300% 300%;
+    filter: saturate(1.05) blur(24px);
+    z-index: 0;
+    opacity: 0.85;
+    animation: gradientShift 18s ease infinite;
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    right: -10%;
+    bottom: -10%;
+    width: 60vmax;
+    height: 60vmax;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), rgba(255,255,255,0) 25%),
+                radial-gradient(circle at 70% 70%, rgba(0,0,0,0.06), rgba(0,0,0,0) 30%);
+    filter: blur(40px) contrast(1.02);
+    transform: translate3d(0,0,0);
+    z-index: 0;
+    opacity: 0.9;
+    animation: floatAndPulse 12s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes floatAndPulse {
+    0% { transform: translate3d(0,0,0) scale(1); opacity: 0.9; }
+    25% { transform: translate3d(-3%, -2%, 0) scale(1.02); opacity: 0.95; }
+    50% { transform: translate3d(-6%, 3%, 0) scale(0.98); opacity: 0.88; }
+    75% { transform: translate3d(-3%, -1%, 0) scale(1.01); opacity: 0.92; }
+    100% { transform: translate3d(0,0,0) scale(1); opacity: 0.9; }
+}
+
+/* Ensure main UI sits above the animated background */
+.auth-container,
+.container,
+.dashboard-wrapper,
+.modal-content,
+.card {
+    position: relative;
+    z-index: 2;
+}
+
+/* Slightly translucent card appearance to show the animated background subtly while keeping readability. */
+.auth-box,
+.card,
+.modal-content,
+.dashboard-wrapper {
+    background: rgba(255,255,255,0.92);
+    /* modern browsers: lightly blur behind the card */
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+/* Reduce animation intensity on small devices to save CPU */
+@media (max-width: 768px) {
+    body::before { filter: blur(18px); opacity: 0.8; }
+    body::after { filter: blur(30px); opacity: 0.85; }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    body::before, body::after { animation: none !important; }
 }
 
 .container {
@@ -39,26 +117,13 @@ body {
     padding: 20px;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .auth-box {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.92);
     border-radius: 10px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.2);
     padding: 40px;
     width: 100%;
     max-width: 450px;
-    animation: fadeInUp 0.8s ease-out;
 }
 
 .auth-box h2 {
@@ -87,20 +152,9 @@ body {
     transition: border-color 0.3s;
 }
 
-.form-control {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: all 0.3s ease;
-}
-
 .form-control:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-    transform: translateY(-2px);
 }
 
 .btn {
@@ -115,34 +169,14 @@ body {
     text-align: center;
 }
 
-@keyframes buttonPulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
-    }
-    70% {
-        transform: scale(1.02);
-        box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
-    }
-}
-
 .btn-primary {
-    background: linear-gradient(45deg, #667eea, #764ba2);
+    background: #667eea;
     color: white;
     width: 100%;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(45deg, #5568d3, #6543a0);
-    transform: translateY(-2px);
-    animation: buttonPulse 1.5s infinite;
+    background: #5568d3;
 }
 
 .btn-success {
@@ -214,7 +248,7 @@ body {
 }
 
 .dashboard-wrapper {
-    background: white;
+    background: rgba(255,255,255,0.92);
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     margin-top: 30px;
@@ -264,7 +298,7 @@ body {
 }
 
 .card {
-    background: white;
+    background: rgba(255,255,255,0.92);
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
@@ -348,7 +382,7 @@ table tr:hover {
 }
 
 .modal-content {
-    background: white;
+    background: rgba(255,255,255,0.96);
     margin: 50px auto;
     padding: 30px;
     border-radius: 10px;

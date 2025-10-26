@@ -94,7 +94,7 @@ USER WORKFLOW:
    - Approve or deny with reasons
    - Review and approve/reject PO/Awarding letters
 
-3. ELECTRICITY SUPERVISOR:
+3. ELECTRICAL SUPERINTENDENT:
    - Review Chief Clerk approved requests
    - Approve or deny with reasons
    - Create PO/Awarding letters for fully approved requests

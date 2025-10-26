@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="">Select Role</option>
                         <option value="clerk">Clerk</option>
                         <option value="chief_clerk">Chief Clerk</option>
-                        <option value="electricity_supervisor">Electricity Supervisor</option>
+                        <option value="electricity_supervisor">Electrical Superintendent</option>
                         <option value="electrical_engineer">Electrical Engineer</option>
                         <option value="chief_engineer">Chief Engineer</option>
                     </select>

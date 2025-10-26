@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="label">Chief Clerk Status:</div>
                         <div class="value"><span class="badge badge-<?php echo $request['chief_clerk_status']; ?>"><?php echo ucfirst($request['chief_clerk_status']); ?></span></div>
 
-                        <div class="label">Electricity Supervisor Status:</div>
+                        <div class="label">Electrical Superintendent Status:</div>
                         <div class="value"><span class="badge badge-<?php echo $request['electricity_supervisor_status']; ?>"><?php echo ucfirst($request['electricity_supervisor_status']); ?></span></div>
                     </div>
                 </div>

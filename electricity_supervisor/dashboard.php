@@ -15,14 +15,14 @@ $po_requests = $conn->query("SELECT po.*, qr.id as quotation_id FROM po_awarding
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electricity Supervisor Dashboard</title>
+    <title>Electrical Superintendent Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
     <div class="container">
         <div class="dashboard-wrapper">
             <div class="dashboard-header">
-                <h2>Electricity Supervisor Dashboard</h2>
+                <h2>Electrical Superintendent Dashboard</h2>
                 <div class="nav-links">
                     <span>Welcome, <?php echo $_SESSION['full_name']; ?></span>
                     <a href="approved_requests.php">Approved Requests</a>

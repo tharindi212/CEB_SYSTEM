@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 sendEmail($supervisor['email'], $supervisor['full_name'], $subject, $body);
             }
 
-            $success = 'Request approved successfully! Electricity Supervisor will be notified to send PO/Awarding letter.';
+            $success = 'Request approved successfully! Electrical Superintendent will be notified to send PO/Awarding letter.';
             header('refresh:2;url=dashboard.php');
         }
     } elseif ($action === 'deny') {
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="timeline-item">
                             <div class="timeline-icon approved">✓</div>
                             <div class="timeline-content">
-                                <h4>Electricity Supervisor</h4>
+                                <h4>Electrical Superintendent</h4>
                                 <p>Status: <strong>Approved</strong></p>
                                 <p>Date: <?php echo formatDate($request['electricity_supervisor_date']); ?></p>
                             </div>
@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <form method="POST" action="">
                         <div class="action-buttons">
-                            <button type="submit" name="action" value="approve" class="btn btn-success" formnovalidate>Approve and Send to Supervisor</button>
+                            <button type="submit" name="action" value="approve" class="btn btn-success" formnovalidate>Approve and Send to Electrical Superintendent</button>
                             <button type="button" class="btn btn-danger" onclick="showDenyForm()">Deny</button>
                         </div>
 
