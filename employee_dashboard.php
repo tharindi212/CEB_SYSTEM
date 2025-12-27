@@ -117,7 +117,7 @@ try {
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="quotation_type">Quotation Type *</label>
-                                    <select id="quotation_type" name="quotation_type" required>
+                                    <select id="quotation_type" name="quotation_type" required onchange="toggleVehicleNumber()">
                                         <option value="">Select quotation type</option>
                                         <option value="Vehicle Maintenance" <?php echo (isset($_POST['quotation_type']) && $_POST['quotation_type'] == 'Vehicle Maintenance') ? 'selected' : ''; ?>>Vehicle Maintenance</option>
                                         <option value="Fuel Supply" <?php echo (isset($_POST['quotation_type']) && $_POST['quotation_type'] == 'Fuel Supply') ? 'selected' : ''; ?>>Fuel Supply</option>
@@ -127,9 +127,9 @@ try {
                                     </select>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group" id="vehicle_no_group">
                                     <label for="vehicle_no">Vehicle Number *</label>
-                                    <input type="text" id="vehicle_no" name="vehicle_no" required 
+                                    <input type="text" id="vehicle_no" name="vehicle_no" 
                                            placeholder="e.g., ABC-1234"
                                            value="<?php echo isset($_POST['vehicle_no']) ? htmlspecialchars($_POST['vehicle_no']) : ''; ?>">
                                 </div>
@@ -199,7 +199,7 @@ try {
                                         <th>Status</th>
                                         <th>Submitted</th>
                                         <th>ES/CE Approvals</th>
-                                        <th>Approved By</th>
+                                        <!-- <th>Approved By</th> -->
                                         <th>Attachment</th>
                                     </tr>
                                 </thead>
@@ -229,7 +229,7 @@ try {
                                                     echo $officerApprovedCount . '/2';
                                                 ?>
                                             </td>
-                                            <td><?php echo $quotation['approved_by_name'] ? htmlspecialchars($quotation['approved_by_name']) : 'N/A'; ?></td>
+                                            <!--<td><?php echo $quotation['approved_by_name'] ? htmlspecialchars($quotation['approved_by_name']) : 'N/A'; ?></td>-->
                                             <td>
                                                 <?php if ($quotation['attachment']): ?>
                                                     <a href="uploads/<?php echo htmlspecialchars($quotation['attachment']); ?>" target="_blank" class="btn btn-secondary" style="padding: 5px 10px; font-size: 12px;">View</a>
@@ -268,6 +268,26 @@ try {
             // Add active class to clicked tab
             event.target.classList.add('active');
         }
+        
+        function toggleVehicleNumber() {
+            var quotationType = document.getElementById('quotation_type').value;
+            var vehicleNoGroup = document.getElementById('vehicle_no_group');
+            var vehicleNoInput = document.getElementById('vehicle_no');
+            
+            if (quotationType === 'Vehicle Maintenance') {
+                vehicleNoGroup.style.display = 'block';
+                vehicleNoInput.required = true;
+            } else {
+                vehicleNoGroup.style.display = 'none';
+                vehicleNoInput.required = false;
+                vehicleNoInput.value = '';
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleVehicleNumber();
+        });
         
         // File upload preview
         document.getElementById('attachment').addEventListener('change', function(e) {
