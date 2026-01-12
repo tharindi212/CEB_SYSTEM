@@ -34,6 +34,11 @@ CREATE TABLE IF NOT EXISTS quotations (
     officer1_approved_at TIMESTAMP NULL,
     officer2_approved TINYINT(1) NOT NULL DEFAULT 0,
     officer2_approved_at TIMESTAMP NULL,
+    -- Billing uploads
+    bill_store1 VARCHAR(255) NULL,
+    bill_store2 VARCHAR(255) NULL,
+    bill_store3 VARCHAR(255) NULL,
+    billing_updated_at TIMESTAMP NULL,
     FOREIGN KEY (submitted_by) REFERENCES users(id),
     FOREIGN KEY (approved_by) REFERENCES users(id)
 );
